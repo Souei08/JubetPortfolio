@@ -1,38 +1,119 @@
-// Imports
+"use client";
+
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
+import { SkillCategories, SkillsContent } from "@/utils/SkillsContent";
+import { SectionSeparator } from "./SectionSeparator";
 
-// Utils
-import { SkillsContent } from "@/utils/SkillsContent";
-
-// Components
-import FadeInTopAnimation from "./animations/FadeInTopAnimation";
+const categoryCopy = {
+  Frontend: {
+    title: "Frontend",
+    note: "Building interfaces and interactive UI",
+  },
+  "Backend & CMS": {
+    title: "Backend & CMS",
+    note: "APIs, servers, and content platforms",
+  },
+  "Data & Tools": {
+    title: "Data & Tools",
+    note: "Databases, hosting services, and workflow",
+  },
+};
 
 export const Skills = () => {
+  const reduceMotion = useReducedMotion();
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 28 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0.2 : 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.08,
+        delayChildren: reduceMotion ? 0 : 0.05,
+      },
+    },
+  };
+
   return (
-    <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-2 lg:py-20">
-      <div className="p-8 rounded  sm:p-16">
-        <h2 className="mb-28 text-center font-sans text-1xl font-bold tracking-tight  sm:text-4xl sm:leading-none AgrandirHeavy">
-          SOME TECHNOLOGIES I'VE <br /> WORKED WITH
-        </h2>
-        <div className=" mx-auto grid gap-[4.75rem] grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 lg:max-w-screen-lg">
-          {SkillsContent.map((skills) => (
-            <FadeInTopAnimation key={skills.name}>
-              <div className="flex flex-col items-center">
-                <Image
-                  className="h-10 w-10 mb-2"
-                  src={skills.imageUrl}
-                  alt="languages & frameworks"
-                />
-                <div>
-                  <h3 className="mt-5 text-base tracking-tight AgrandirRegular text-center">
-                    {skills.name}
-                  </h3>
-                </div>
-              </div>
-            </FadeInTopAnimation>
-          ))}
+    <section id="skills" className="section section-skills">
+      <SectionSeparator />
+
+      <div className="section-shell">
+        <motion.div
+          className="section-intro"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={stagger}
+        >
+          <motion.p variants={fadeUp} className="section-label">
+            Skills
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="section-title mb-4">
+            What I work with
+          </motion.h2>
+          <motion.p variants={fadeUp} className="body-copy max-w-xl">
+            A clear look at the tools I use to design, build, and ship web
+            products — from interface to backend.
+          </motion.p>
+        </motion.div>
+
+        <div className="skills-board">
+          {SkillCategories.map((category, categoryIndex) => {
+            const skills = SkillsContent.filter(
+              (skill) => skill.category === category
+            );
+            const copy = categoryCopy[category];
+
+            return (
+              <motion.div
+                key={category}
+                className="skills-group"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={stagger}
+              >
+                <motion.header variants={fadeUp} className="skills-group__header">
+                  <div className="skills-group__title-row">
+                    <span className="skills-group__index">
+                      {String(categoryIndex + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="skills-group__title">{copy.title}</h3>
+                    <span className="skills-group__count">
+                      {String(skills.length).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="skills-group__note">{copy.note}</p>
+                </motion.header>
+
+                <motion.ul variants={fadeUp} className="skills-tags">
+                  {skills.map((skill) => (
+                    <li key={skill.name} className="skills-tag">
+                      <Image
+                        className="skill-icon h-3.5 w-3.5 shrink-0 opacity-70"
+                        src={skill.imageUrl}
+                        alt=""
+                        width={14}
+                        height={14}
+                      />
+                      <span>{skill.name}</span>
+                    </li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
