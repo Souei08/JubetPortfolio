@@ -1,54 +1,74 @@
-// Utils
-import { WorksContent } from "@/utils/WorksContent";
+"use client";
 
-// Imports
 import Link from "next/link";
-import Image from "next/image";
-
-// Animation Components
-import FadeInLeftAnimation from "./animations/FadeInLeftAnimation";
+import { motion, useReducedMotion } from "framer-motion";
+import { TOTAL_WORKS_COUNT, WorksPreview } from "@/utils/WorksPreview";
+import { SectionSeparator } from "./SectionSeparator";
+import { WorksSlider } from "./WorksSlider";
 
 export const Projects = () => {
-  return (
-    <div id="works">
-      <div className="px-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
-        <h2 className="text-center mb-36 font-sans text-3xl font-bold tracking-tight  sm:text-4xl sm:leading-none AgrandirHeavy">
-          WORKS
-        </h2>
-      </div>
+  const reduceMotion = useReducedMotion();
+  const remainingCount = Math.max(TOTAL_WORKS_COUNT - WorksPreview.length, 0);
 
-      {WorksContent.map((project) => (
-        <div className="flex flex-col justify-between items-center lg:flex-row gap-10 mb-20">
-          <div className="mb-6 lg:mb-0	lg:pr-5">
-            <FadeInLeftAnimation>
-              <Image
-                className="bg-cover object-center shadow-lg  lg:rounded-r-[50px] lg:w-[741px]"
-                src={project.imageUrl}
-                alt={project.title}
-              />
-            </FadeInLeftAnimation>
-          </div>
-          <div className="lg:w-2/5 mx-10">
-            {project.links ? (
-              <Link href={project.links} passHref>
-                <h1 className="AgrandirHeavy decoration-solid underline	 mb-5">
-                  {project.title}
-                </h1>
-              </Link>
-            ) : (
-              <h1 className="AgrandirHeavy decoration-solid underline	 mb-5">
-                {project.title}
-              </h1>
-            )}
-            <p className="mb-4 text-base AgrandirRegular">
-              {project.description}
-            </p>
-            {/* {project.stacks.map((stacks) => (
-              <h1>{stacks}</h1>
-            ))} */}
-          </div>
+  const fadeUp = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 28 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0.2 : 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.1,
+        delayChildren: reduceMotion ? 0 : 0.05,
+      },
+    },
+  };
+
+  return (
+    <section id="works" className="section section-works">
+      <SectionSeparator />
+
+      <div className="section-shell">
+        <motion.div
+          className="section-intro mx-auto max-w-2xl text-center"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={stagger}
+        >
+          <motion.p variants={fadeUp} className="section-label">
+            Work
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="section-title mb-4">
+            Selected projects
+          </motion.h2>
+          <motion.p variants={fadeUp} className="body-copy mx-auto max-w-lg">
+            A few recent projects. Swipe through, then open the full archive.
+          </motion.p>
+        </motion.div>
+
+        <WorksSlider
+          projects={WorksPreview}
+          remainingCount={remainingCount}
+        />
+
+        <div className="mt-12 flex justify-center md:mt-14">
+          <Link href="/works" className="CustomButton CustomButton--ghost group">
+            View more work
+            <span
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </Link>
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 };

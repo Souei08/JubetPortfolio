@@ -1,55 +1,173 @@
 "use client";
 
-// Animation Components
-import FadeInAnimation from "./animations/FadeInTopAnimation";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
+import { Link as ScrollLink } from "react-scroll";
+
+const profileFacts = [
+  { label: "Role", value: "Web Developer" },
+  { label: "Based", value: "Davao City, PH" },
+  { label: "Open to", value: "Full-time & contract" },
+];
 
 export const About = () => {
-  const handleButtonClick = (e) => {
-    e.preventDefault();
-    window.open("/files/Jubet_Aceberos_Resume.pdf", "_blank");
+  const reduceMotion = useReducedMotion();
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 28 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0.2 : 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.1,
+        delayChildren: reduceMotion ? 0 : 0.06,
+      },
+    },
+  };
+
+  const handleResumeClick = () => {
+    window.open(
+      "/files/Jubet_Aceberos_Resume.pdf",
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   return (
-    <div
-      id="about"
-      className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-2 lg:py-20"
-    >
-      <div className="p-8 rounded  sm:p-16">
-        <div className="flex flex-col items-center gap-20 lg:flex-row">
-          <div className="mb-6 lg:mb-0 lg:w-1/2 lg:pr-5">
-            <FadeInAnimation>
-              <h2 className="mb-10 font-sans text-3xl font-bold tracking-tight  sm:text-4xl sm:leading-none AgrandirHeavy">
-                ABOUT ME
-              </h2>
+    <section id="about" className="section section-about">
+      <div className="section-fade" aria-hidden="true" />
 
-              <p className="mb-4 text-base AgrandirRegular">
-                Hello there! I'm Jubet Aceberos, a passionate web developer with
-                a knack for turning ideas into reality through the power of
-                code. I thrive on challenges and take pride in crafting
-                interactive, user-friendly, and visually appealing websites
-              </p>
+      <div className="section-shell">
+        <div className="grid items-stretch gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+          {/* Portrait */}
+          <motion.div
+            className="flex h-full w-full lg:col-span-5"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+          >
+            <figure className="about-portrait">
+              <div className="about-portrait__stage">
+                <span className="about-portrait__plate" aria-hidden="true" />
+                <div className="about-portrait__frame">
+                  <span
+                    className="about-portrait__corner about-portrait__corner--tl"
+                    aria-hidden="true"
+                  />
+                  <span
+                    className="about-portrait__corner about-portrait__corner--tr"
+                    aria-hidden="true"
+                  />
+                  <span
+                    className="about-portrait__corner about-portrait__corner--bl"
+                    aria-hidden="true"
+                  />
+                  <span
+                    className="about-portrait__corner about-portrait__corner--br"
+                    aria-hidden="true"
+                  />
+                  <div className="about-portrait__media">
+                    <Image
+                      src="/images/backgrounds/Jubet.JPG"
+                      alt="Portrait of Jubet Aceberos"
+                      fill
+                      className="about-portrait__image object-cover object-[center_18%]"
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                      quality={80}
+                      priority
+                    />
+                    <span className="about-portrait__wash" aria-hidden="true" />
+                  </div>
+                </div>
+              </div>
+            </figure>
+          </motion.div>
 
-              <p className="mb-7 text-base AgrandirRegular">
-                I'm open to job opportunities where I can leverage my skills,
-                learn, and grow. If you have a fitting opportunity that aligns
-                with my skills and experiences, feel free to reach out at your
-                convenience.
-              </p>
+          {/* Copy */}
+          <motion.div
+            className="flex flex-col justify-center lg:col-span-7"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={stagger}
+          >
+            <motion.p variants={fadeUp} className="section-label">
+              About
+            </motion.p>
 
-              <button className="CustomButton" onClick={handleButtonClick}>
-                Resume
+            <motion.h2
+              variants={fadeUp}
+              className="section-title mb-6 max-w-xl"
+            >
+              Building reliable web products with clarity and care
+            </motion.h2>
+
+            <motion.p variants={fadeUp} className="body-copy mb-5 max-w-xl">
+              I&apos;m a web developer focused on turning ideas into polished,
+              usable experiences — clean structure, thoughtful interactions,
+              and interfaces that feel easy from the first click.
+            </motion.p>
+
+            <motion.p variants={fadeUp} className="body-copy mb-10 max-w-xl">
+              I work across modern frontends, CMS platforms, and supporting
+              backends. Open to roles where I can contribute carefully, ship
+              quality work, and keep learning.
+            </motion.p>
+
+            <motion.dl variants={fadeUp} className="about-meta mb-8 max-w-xl">
+              {profileFacts.map((fact) => (
+                <div key={fact.label} className="about-meta__item">
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </motion.dl>
+
+            <motion.div
+              variants={fadeUp}
+              className="about-actions flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <button
+                type="button"
+                className="CustomButton group"
+                onClick={handleResumeClick}
+              >
+                Download resume
+                <span
+                  className="transition-transform duration-300 group-hover:translate-y-0.5"
+                  aria-hidden="true"
+                >
+                  ↓
+                </span>
               </button>
-            </FadeInAnimation>
-          </div>
-          <div className="lg:w-1/2 flex justify-center">
-            <img
-              className="object-cover object-center rounded shadow-lg	 lg:w-3/5  h-96	 sm:h-96 sm:w-full"
-              src={"../images/backgrounds/Jubet.JPG"}
-              alt=""
-            />
-          </div>
+              <ScrollLink
+                to="contact"
+                spy={true}
+                smooth={true}
+                offset={-40}
+                duration={500}
+                className="CustomButton CustomButton--ghost group cursor-pointer"
+              >
+                Get in touch
+                <span
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </ScrollLink>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
