@@ -92,6 +92,9 @@ export const Skills = () => {
                     <span className="skills-group__count">
                       {String(skills.length).padStart(2, "0")}
                     </span>
+                    <span className="skills-group__arrow" aria-hidden="true">
+                      ↗
+                    </span>
                   </div>
                   <p className="skills-group__note">{copy.note}</p>
                 </motion.header>

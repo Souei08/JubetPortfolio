@@ -135,18 +135,10 @@ export const Contact = () => {
         </motion.div>
       </div>
 
-      <footer className="relative z-10">
-        <div className="px-6 md:px-10 lg:px-12">
-          <div
-            className="divider-soft mx-auto max-w-content"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="mx-auto flex max-w-content flex-col items-center justify-between gap-4 px-6 py-8 md:flex-row md:px-10 lg:px-12">
-          <p className="font-display text-sm tracking-brand text-ink/70">
-            JUBET.
-          </p>
-          <p className="font-body text-xs text-muted">
+      <footer className="contact-footer">
+        <div className="contact-footer__inner">
+          <p className="contact-footer__brand">JUBET.</p>
+          <p className="contact-footer__copy">
             © {new Date().getFullYear()} Jubet Aceberos. Crafted with care.
           </p>
         </div>
