@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { Link as ScrollLink } from "react-scroll";
 
 // Hidden for now — restore under the portrait when ready
 // const profileFacts = [
@@ -49,10 +48,27 @@ export const About = () => {
       </span>
 
       <div className="section-shell">
-        <div className="grid items-stretch gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-20">
-          {/* Portrait + facts */}
+        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-6 xl:gap-x-20">
+          {/* Intro — first on mobile, top-right on desktop */}
           <motion.div
-            className="flex h-full w-full flex-col gap-8 lg:col-span-5"
+            className="order-1 flex flex-col lg:order-2 lg:col-span-7"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={stagger}
+          >
+            <motion.p variants={fadeUp} className="section-label">
+              About me
+            </motion.p>
+
+            <motion.h2 variants={fadeUp} className="section-title max-w-xl">
+              I&apos;m Jubet — a web developer from Davao City
+            </motion.h2>
+          </motion.div>
+
+          {/* Portrait — under title on mobile, left column on desktop */}
+          <motion.div
+            className="order-2 flex w-full flex-col gap-8 self-stretch lg:order-1 lg:col-span-5 lg:row-span-2"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
@@ -106,41 +122,29 @@ export const About = () => {
             */}
           </motion.div>
 
-          {/* Copy */}
+          {/* Body — after image on mobile, under title on desktop */}
           <motion.div
-            className="flex flex-col justify-center lg:col-span-7"
+            className="order-3 flex flex-col lg:order-3 lg:col-span-7"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
             variants={stagger}
           >
-            <motion.p variants={fadeUp} className="section-label">
-              About
-            </motion.p>
-
-            <motion.h2
-              variants={fadeUp}
-              className="section-title mb-6 max-w-xl"
-            >
-              Building reliable web products with clarity and care
-            </motion.h2>
-
             <motion.p variants={fadeUp} className="body-copy mb-5 max-w-xl">
-              I&apos;m a web developer focused on turning ideas into polished,
-              usable experiences — clean structure, thoughtful interactions,
-              and interfaces that feel easy from the first click.
+              I build websites and web products that feel clear, reliable, and
+              thoughtfully made. From first layout to final interaction, I care
+              about structure, usability, and the small details that make an
+              interface easy to trust.
             </motion.p>
 
             <motion.p variants={fadeUp} className="body-copy mb-10 max-w-xl">
-              I work across modern frontends, CMS platforms, and supporting
-              backends. Open to roles where I can contribute carefully, ship
-              quality work, and keep learning.
+              Day to day I work across modern frontends, CMS platforms, and the
+              backends that support them. I&apos;m open to full-time and contract
+              roles where I can contribute carefully, ship solid work, and keep
+              growing as a developer.
             </motion.p>
 
-            <motion.div
-              variants={fadeUp}
-              className="about-actions flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
+            <motion.div variants={fadeUp} className="about-actions">
               <button
                 type="button"
                 className="CustomButton group"
@@ -154,22 +158,6 @@ export const About = () => {
                   ↓
                 </span>
               </button>
-              <ScrollLink
-                to="contact"
-                spy={true}
-                smooth={true}
-                offset={-40}
-                duration={500}
-                className="CustomButton CustomButton--ghost group cursor-pointer"
-              >
-                Get in touch
-                <span
-                  className="transition-transform duration-300 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-              </ScrollLink>
             </motion.div>
           </motion.div>
         </div>

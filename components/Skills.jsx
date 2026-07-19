@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { SkillCategories, SkillsContent } from "@/utils/SkillsContent";
 
@@ -18,6 +17,11 @@ const categoryCopy = {
     note: "Databases, hosting services, and workflow",
   },
 };
+
+function skillIconSrc(imageUrl) {
+  if (typeof imageUrl === "string") return imageUrl;
+  return imageUrl?.src || "";
+}
 
 export const Skills = () => {
   const reduceMotion = useReducedMotion();
@@ -68,7 +72,7 @@ export const Skills = () => {
         </motion.div>
 
         <div className="skills-board">
-          {SkillCategories.map((category, categoryIndex) => {
+          {SkillCategories.map((category) => {
             const skills = SkillsContent.filter(
               (skill) => skill.category === category
             );
@@ -85,33 +89,33 @@ export const Skills = () => {
               >
                 <motion.header variants={fadeUp} className="skills-group__header">
                   <div className="skills-group__title-row">
-                    <span className="skills-group__index">
-                      {String(categoryIndex + 1).padStart(2, "0")}
-                    </span>
                     <h3 className="skills-group__title">{copy.title}</h3>
-                    <span className="skills-group__count">
-                      {String(skills.length).padStart(2, "0")}
-                    </span>
-                    <span className="skills-group__arrow" aria-hidden="true">
-                      ↗
-                    </span>
+                    <span className="skills-group__rule" aria-hidden="true" />
                   </div>
                   <p className="skills-group__note">{copy.note}</p>
                 </motion.header>
 
                 <motion.ul variants={fadeUp} className="skills-tags">
-                  {skills.map((skill) => (
-                    <li key={skill.name} className="skills-tag">
-                      <Image
-                        className="skill-icon h-3.5 w-3.5 shrink-0 opacity-70"
-                        src={skill.imageUrl}
-                        alt=""
-                        width={14}
-                        height={14}
-                      />
-                      <span>{skill.name}</span>
-                    </li>
-                  ))}
+                  {skills.map((skill) => {
+                    const iconSrc = skillIconSrc(skill.imageUrl);
+
+                    return (
+                      <li key={skill.name} className="skills-tag">
+                        <span
+                          className="skill-icon"
+                          aria-hidden="true"
+                          style={{
+                            "--skill-brand": skill.brandColor,
+                            "--skill-brand-on-dark":
+                              skill.brandColorOnDark || skill.brandColor,
+                            WebkitMaskImage: `url("${iconSrc}")`,
+                            maskImage: `url("${iconSrc}")`,
+                          }}
+                        />
+                        <span>{skill.name}</span>
+                      </li>
+                    );
+                  })}
                 </motion.ul>
               </motion.div>
             );

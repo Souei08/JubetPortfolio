@@ -6,7 +6,8 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const BANNER_IMAGES = {
   dark: "/images/backgrounds/verse-banner-dark.png",
-  light: "/images/backgrounds/banner-light.png",
+  // Light-only: same atmosphere + coloring as the hero
+  light: "/images/backgrounds/hero-light-atmosphere.png",
 };
 
 function readTheme() {
@@ -79,7 +80,6 @@ export const GuidingVerse = () => {
         variants={stagger}
       >
         <motion.blockquote variants={fadeUp} className="contact-banner__quote">
-          <p className="section-label">Guiding verse</p>
 
           <p className="contact-banner__text">
             “I can do all things through him who strengthens me”

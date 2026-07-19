@@ -1,4 +1,5 @@
 import { WorksContent } from "@/utils/WorksContent";
+import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { WorksList } from "@/components/WorksList";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
@@ -30,26 +31,15 @@ export default function WorksPage() {
 
           <WorksList projects={WorksContent} />
 
-          <div className="mt-20 flex flex-col items-center gap-4 md:mt-28">
-            <Link href="/#contact" className="CustomButton group">
-              Get in touch
-              <span
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </Link>
-            <Link
-              href="/"
-              className="font-body text-sm text-muted transition-colors hover:text-ink"
-            >
-              ← Back to home
+          <div className="hero-actions mt-20 md:mt-28">
+            <Link href="/" className="CustomButton CustomButton--text">
+              Back to home
             </Link>
           </div>
         </div>
       </section>
 
+      <Footer />
       <ScrollToTopButton />
     </main>
   );
