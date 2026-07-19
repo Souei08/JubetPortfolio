@@ -1,7 +1,7 @@
 // Images
 import moneyversity from "@/public/images/works/moneyversity.jpg";
 import shosai from "@/public/images/works/shosai.jpg";
-import smartindustrial from "@/public/images/works/smartindustrial.jpg";
+import smartindustrial from "@/public/images/works/smartindustrial.png";
 import eazysites from "@/public/images/works/eazysites.png";
 import oplerra from "@/public/images/works/oplerra.png";
 import ultrahiring from "@/public/images/works/ultrahiring.png";
@@ -11,9 +11,18 @@ import eagleshield from "@/public/images/works/eagleshield.png";
 import localfyi from "@/public/images/works/localfyi.png";
 import cardonation from "@/public/images/works/cardonation.png";
 import wikiroms from "@/public/images/works/wikiroms.png";
+import suissetechpartners from "@/public/images/works/suissetechpartners.png";
 
 /** Full archive — imported by /works only. Home uses utils/WorksPreview.js. */
 export const WorksContent = [
+  {
+    title: "SuisseTechPartners",
+    links: "https://www.suissetechpartners.com/",
+    description:
+      "Corporate site for an international fintech company behind PMplus® — a cloud-native portfolio management platform for trustees, asset servicers, and wealth managers.",
+    stacks: ["WordPress", "Fintech"],
+    imageUrl: suissetechpartners,
+  },
   {
     title: "Moneyversity+",
     links: "https://moneyversity.co.za/",

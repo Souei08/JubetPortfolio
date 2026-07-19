@@ -1,8 +1,8 @@
 import moneyversity from "@/public/images/works/moneyversity.jpg";
 import shosai from "@/public/images/works/shosai.jpg";
-import smartindustrial from "@/public/images/works/smartindustrial.jpg";
+import smartindustrial from "@/public/images/works/smartindustrial.png";
 import eazysites from "@/public/images/works/eazysites.png";
-import oplerra from "@/public/images/works/oplerra.png";
+import suissetechpartners from "@/public/images/works/suissetechpartners.png";
 
 /** Featured projects shown on the home slider (keep imports lean). */
 export const WorksPreview = [
@@ -31,6 +31,14 @@ export const WorksPreview = [
     imageUrl: smartindustrial,
   },
   {
+    title: "SuisseTechPartners",
+    links: "https://www.suissetechpartners.com/",
+    description:
+      "Corporate site for an international fintech company behind PMplus® — a cloud-native portfolio management platform for trustees, asset servicers, and wealth managers.",
+    stacks: ["WordPress", "Fintech"],
+    imageUrl: suissetechpartners,
+  },
+  {
     title: "EazySites",
     links: "https://www.eazysites.com/",
     description:
@@ -38,15 +46,7 @@ export const WorksPreview = [
     stacks: ["Next.js", "Product marketing"],
     imageUrl: eazysites,
   },
-  {
-    title: "Oplerra",
-    links: "https://oplerra.com/",
-    description:
-      "Field operations software that keeps work, assets, compliance, and crews in sync in real time — so teams can see what happened on site, not guess from spreadsheets.",
-    stacks: ["Next.js", "SaaS"],
-    imageUrl: oplerra,
-  },
 ];
 
 /** Keep in sync with utils/WorksContent.js length. */
-export const TOTAL_WORKS_COUNT = 12;
+export const TOTAL_WORKS_COUNT = 13;
