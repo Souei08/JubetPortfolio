@@ -4,11 +4,12 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 
-const profileFacts = [
-  { label: "Role", value: "Web Developer" },
-  { label: "Based", value: "Davao City, PH" },
-  { label: "Open to", value: "Full-time & contract" },
-];
+// Hidden for now — restore under the portrait when ready
+// const profileFacts = [
+//   { label: "Role", value: "Web Developer" },
+//   { label: "Based", value: "Davao City, PH" },
+//   { label: "Open to", value: "Full-time & contract" },
+// ];
 
 export const About = () => {
   const reduceMotion = useReducedMotion();
@@ -43,18 +44,21 @@ export const About = () => {
   return (
     <section id="about" className="section section-about">
       <div className="section-fade" aria-hidden="true" />
+      <span className="section-mark" aria-hidden="true">
+        About
+      </span>
 
       <div className="section-shell">
         <div className="grid items-stretch gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-20">
-          {/* Portrait */}
+          {/* Portrait + facts */}
           <motion.div
-            className="flex h-full w-full lg:col-span-5"
+            className="flex h-full w-full flex-col gap-8 lg:col-span-5"
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUp}
+            viewport={{ once: true, amount: 0.25 }}
+            variants={stagger}
           >
-            <figure className="about-portrait">
+            <motion.figure variants={fadeUp} className="about-portrait">
               <div className="about-portrait__stage">
                 <span className="about-portrait__plate" aria-hidden="true" />
                 <div className="about-portrait__frame">
@@ -88,7 +92,18 @@ export const About = () => {
                   </div>
                 </div>
               </div>
-            </figure>
+            </motion.figure>
+
+            {/* Profile facts — hidden for now
+            <motion.dl variants={fadeUp} className="about-meta">
+              {profileFacts.map((fact) => (
+                <div key={fact.label} className="about-meta__item">
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </motion.dl>
+            */}
           </motion.div>
 
           {/* Copy */}
@@ -121,15 +136,6 @@ export const About = () => {
               backends. Open to roles where I can contribute carefully, ship
               quality work, and keep learning.
             </motion.p>
-
-            <motion.dl variants={fadeUp} className="about-meta mb-8 max-w-xl">
-              {profileFacts.map((fact) => (
-                <div key={fact.label} className="about-meta__item">
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.value}</dd>
-                </div>
-              ))}
-            </motion.dl>
 
             <motion.div
               variants={fadeUp}

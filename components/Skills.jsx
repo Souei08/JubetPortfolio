@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { SkillCategories, SkillsContent } from "@/utils/SkillsContent";
-import { SectionSeparator } from "./SectionSeparator";
 
 const categoryCopy = {
   Frontend: {
@@ -44,7 +43,9 @@ export const Skills = () => {
 
   return (
     <section id="skills" className="section section-skills">
-      <SectionSeparator />
+      <span className="section-mark" aria-hidden="true">
+        Skills
+      </span>
 
       <div className="section-shell">
         <motion.div

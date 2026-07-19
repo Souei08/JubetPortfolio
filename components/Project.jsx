@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { TOTAL_WORKS_COUNT, WorksPreview } from "@/utils/WorksPreview";
-import { SectionSeparator } from "./SectionSeparator";
 import { WorksSlider } from "./WorksSlider";
 
 export const Projects = () => {
@@ -31,7 +30,9 @@ export const Projects = () => {
 
   return (
     <section id="works" className="section section-works">
-      <SectionSeparator />
+      <span className="section-mark" aria-hidden="true">
+        Work
+      </span>
 
       <div className="section-shell">
         <motion.div
