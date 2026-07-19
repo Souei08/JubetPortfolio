@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 
 const HERO_IMAGES = {
   dark: "/images/backgrounds/Clouds.png",
-  light: "/images/backgrounds/hero-light.png",
+  // Light-only: atmospheric cloudscape with visible midtones on white canvas
+  light: "/images/backgrounds/hero-light-atmosphere.png",
 };
 
 const container = {
@@ -37,6 +38,10 @@ function readTheme() {
 export const Header = () => {
   const prefersReducedMotion = useReducedMotion();
   const [theme, setTheme] = useState("dark");
+  const [isScrollHintReady, setIsScrollHintReady] = useState(false);
+  const [isScrollHidden, setIsScrollHidden] = useState(false);
+  const isScrollHiddenRef = useRef(false);
+  const rafId = useRef(0);
 
   useEffect(() => {
     setTheme(readTheme());
@@ -51,6 +56,41 @@ export const Header = () => {
     });
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const readyTimer = window.setTimeout(() => {
+      setIsScrollHintReady(true);
+    }, 1100);
+
+    const hideScrollHint = () => {
+      if (isScrollHiddenRef.current) return;
+      if (window.scrollY <= 24) return;
+      isScrollHiddenRef.current = true;
+      setIsScrollHidden(true);
+      window.removeEventListener("scroll", onScroll);
+      if (rafId.current) {
+        window.cancelAnimationFrame(rafId.current);
+        rafId.current = 0;
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId.current) return;
+      rafId.current = window.requestAnimationFrame(() => {
+        rafId.current = 0;
+        hideScrollHint();
+      });
+    };
+
+    hideScrollHint();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.clearTimeout(readyTimer);
+      window.removeEventListener("scroll", onScroll);
+      if (rafId.current) window.cancelAnimationFrame(rafId.current);
+    };
   }, []);
 
   return (
@@ -104,15 +144,9 @@ export const Header = () => {
             smooth={true}
             offset={-72}
             duration={500}
-            className="CustomButton group cursor-pointer"
+            className="CustomButton cursor-pointer"
           >
             View works
-            <span
-              className="transition-transform duration-300 group-hover:translate-x-0.5"
-              aria-hidden="true"
-            >
-              →
-            </span>
           </ScrollLink>
           <ScrollLink
             to="contact"
@@ -120,24 +154,31 @@ export const Header = () => {
             smooth={true}
             offset={-40}
             duration={500}
-            className="CustomButton CustomButton--ghost group cursor-pointer"
+            className="CustomButton CustomButton--text cursor-pointer"
           >
             Get in touch
-            <span
-              className="transition-transform duration-300 group-hover:translate-x-0.5"
-              aria-hidden="true"
-            >
-              →
-            </span>
           </ScrollLink>
         </motion.div>
       </motion.div>
 
       <motion.div
         className="hero-scroll"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.25, duration: 0.7 }}
+        initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
+        animate={{
+          opacity: !isScrollHintReady || isScrollHidden ? 0 : 1,
+          y:
+            !isScrollHintReady || isScrollHidden
+              ? prefersReducedMotion
+                ? 0
+                : 6
+              : 0,
+          pointerEvents:
+            !isScrollHintReady || isScrollHidden ? "none" : "auto",
+        }}
+        transition={{
+          duration: 0.35,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         <ScrollLink
           to="about"
@@ -148,23 +189,22 @@ export const Header = () => {
           className="hero-scroll__link"
           aria-label="Scroll to about"
         >
-          <span className="hero-scroll__label">Scroll</span>
-          <span className="hero-scroll__rule" aria-hidden="true">
+          <span className="hero-scroll__mouse" aria-hidden="true">
             <motion.span
-              className="hero-scroll__rule-fill"
+              className="hero-scroll__wheel"
               animate={
                 prefersReducedMotion
                   ? undefined
-                  : { scaleY: [0.35, 1, 0.35], opacity: [0.4, 0.85, 0.4] }
+                  : { y: [0, 8, 0], opacity: [0.9, 0.25, 0.9] }
               }
               transition={{
-                duration: 2,
+                duration: 1.8,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              style={{ originY: 0 }}
             />
           </span>
+          <span className="hero-scroll__label">Scroll</span>
         </ScrollLink>
       </motion.div>
     </section>

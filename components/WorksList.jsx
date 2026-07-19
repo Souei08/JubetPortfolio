@@ -59,9 +59,6 @@ export const WorksList = ({ projects, startIndex = 0 }) => {
               <div className="mb-4 flex flex-col items-center gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                 <p className="font-body text-xs uppercase tracking-section text-muted">
                   {String(displayIndex + 1).padStart(2, "0")}
-                  {project.stacks?.length
-                    ? `  ·  ${project.stacks.join("  ·  ")}`
-                    : ""}
                 </p>
                 {project.links && (
                   <Link

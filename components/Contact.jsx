@@ -54,103 +54,88 @@ export const Contact = () => {
 
       <GuidingVerse />
 
-      <div className="section-shell">
-        <motion.div
-          className="grid items-stretch gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-20"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          variants={stagger}
-        >
-          <div className="flex flex-col lg:col-span-5">
-            <motion.p variants={fadeUp} className="section-label">
-              Contact
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="section-title mb-5 max-w-sm"
-            >
-              Let&apos;s build something worthwhile
-            </motion.h2>
-            <motion.p variants={fadeUp} className="body-copy mb-10 max-w-md">
-              Open to roles, collaborations, and conversations. Email is the
-              fastest way to reach me — I usually reply within a day or two.
-            </motion.p>
-            <motion.a
-              variants={fadeUp}
-              href="mailto:jubet.sode.5@gmail.com"
-              className="CustomButton group mt-auto inline-flex self-start"
-            >
-              Send an email
-              <span
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
-                aria-hidden="true"
+      <div className="section-contact__panel">
+        <div className="section-shell">
+          <motion.div
+            className="grid items-stretch gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-20"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={stagger}
+          >
+            <div className="flex flex-col lg:col-span-5">
+              <motion.p variants={fadeUp} className="section-label">
+                Contact
+              </motion.p>
+              <motion.h2
+                variants={fadeUp}
+                className="section-title mb-5 max-w-sm"
               >
-                →
-              </span>
-            </motion.a>
-          </div>
-
-          <motion.div variants={fadeUp} className="flex min-h-0 lg:col-span-7">
-            <ul className="flex w-full flex-col border-y border-ink/12">
-              {contactItems.map((item, index) => (
-                <li
-                  key={item.label}
-                  className={`flex flex-1 flex-col justify-center py-7 sm:py-8 ${
-                    index < contactItems.length - 1
-                      ? "border-b border-ink/12"
-                      : ""
-                  }`}
+                Let&apos;s build something worthwhile
+              </motion.h2>
+              <motion.p variants={fadeUp} className="body-copy mb-10 max-w-md">
+                Open to roles, collaborations, and conversations. Email is the
+                fastest way to reach me — I usually reply within a day or two.
+              </motion.p>
+              <motion.a
+                variants={fadeUp}
+                href="mailto:jubet.sode.5@gmail.com"
+                className="CustomButton group mt-auto inline-flex self-start"
+              >
+                Send an email
+                <span
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  aria-hidden="true"
                 >
-                  <div className="grid gap-3 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:items-start sm:gap-10">
-                    <p className="font-body text-xs uppercase tracking-section text-muted">
-                      <span className="mr-2 tabular-nums text-ink/30">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {item.label}
-                    </p>
+                  →
+                </span>
+              </motion.a>
+            </div>
 
-                    <div className="min-w-0">
-                      {item.href ? (
-                        <a
-                          href={item.href}
-                          className="break-words font-display text-lg tracking-tight text-ink transition-colors hover:text-ink/70 sm:text-xl"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="break-words font-display text-lg tracking-tight text-ink sm:text-xl">
-                          {item.value}
-                        </p>
-                      )}
-                      <p className="mt-2 font-body text-sm text-muted">
-                        {item.note}
+            <motion.div variants={fadeUp} className="flex min-h-0 lg:col-span-7">
+              <ul className="flex w-full flex-col border-y border-ink/12">
+                {contactItems.map((item, index) => (
+                  <li
+                    key={item.label}
+                    className={`flex flex-1 flex-col justify-center py-7 sm:py-8 ${
+                      index < contactItems.length - 1
+                        ? "border-b border-ink/12"
+                        : ""
+                    }`}
+                  >
+                    <div className="grid gap-3 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:items-start sm:gap-10">
+                      <p className="font-body text-xs uppercase tracking-section text-muted">
+                        <span className="mr-2 tabular-nums text-ink/30">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        {item.label}
                       </p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </motion.div>
-      </div>
 
-      <footer className="relative z-10">
-        <div className="px-6 md:px-10 lg:px-12">
-          <div
-            className="divider-soft mx-auto max-w-content"
-            aria-hidden="true"
-          />
+                      <div className="min-w-0">
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            className="break-words font-display text-lg tracking-tight text-ink transition-colors hover:text-ink/70 sm:text-xl"
+                          >
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className="break-words font-display text-lg tracking-tight text-ink sm:text-xl">
+                            {item.value}
+                          </p>
+                        )}
+                        <p className="mt-2 font-body text-sm text-muted">
+                          {item.note}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
         </div>
-        <div className="mx-auto flex max-w-content flex-col items-center justify-between gap-4 px-6 py-8 md:flex-row md:px-10 lg:px-12">
-          <p className="font-display text-sm tracking-brand text-ink/70">
-            JUBET.
-          </p>
-          <p className="font-body text-xs text-muted">
-            © {new Date().getFullYear()} Jubet Aceberos. Crafted with care.
-          </p>
-        </div>
-      </footer>
+      </div>
     </section>
   );
 };

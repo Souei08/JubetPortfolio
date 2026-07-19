@@ -20,7 +20,7 @@ module.exports = {
         body: ["AgrandirRegular", "sans-serif"],
       },
       letterSpacing: {
-        brand: "0.12em",
+        brand: "0.08em",
         section: "0.18em",
       },
       maxWidth: {
