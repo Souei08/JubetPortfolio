@@ -6,8 +6,18 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Works | Jubet Aceberos",
-  description: "Selected web projects by Jubet Aceberos",
+  title: "Works",
+  description:
+    "Selected web projects by Jubet Aceberos — SaaS platforms, commerce, and brand experiences.",
+  alternates: {
+    canonical: "/works",
+  },
+  openGraph: {
+    title: "Works | Jubet Aceberos",
+    description:
+      "Selected web projects by Jubet Aceberos — SaaS platforms, commerce, and brand experiences.",
+    url: "/works",
+  },
 };
 
 export default function WorksPage() {
