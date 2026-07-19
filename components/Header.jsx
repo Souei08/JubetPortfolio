@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 
 const HERO_IMAGES = {
@@ -99,7 +98,14 @@ export const Header = () => {
         </motion.p>
 
         <motion.div variants={item} className="hero-actions">
-          <Link href="/works" className="CustomButton group">
+          <ScrollLink
+            to="works"
+            spy={true}
+            smooth={true}
+            offset={-72}
+            duration={500}
+            className="CustomButton group cursor-pointer"
+          >
             View works
             <span
               className="transition-transform duration-300 group-hover:translate-x-0.5"
@@ -107,7 +113,7 @@ export const Header = () => {
             >
               →
             </span>
-          </Link>
+          </ScrollLink>
           <ScrollLink
             to="contact"
             spy={true}

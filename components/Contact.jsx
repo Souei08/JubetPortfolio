@@ -48,6 +48,10 @@ export const Contact = () => {
 
   return (
     <section id="contact" className="section section-contact">
+      <span className="section-mark" aria-hidden="true">
+        Contact
+      </span>
+
       <GuidingVerse />
 
       <div className="section-shell">

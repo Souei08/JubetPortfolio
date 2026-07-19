@@ -17,6 +17,7 @@ export const WorksList = ({ projects, startIndex = 0 }) => {
     },
   };
 
+
   const stagger = {
     hidden: {},
     show: {

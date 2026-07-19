@@ -9,7 +9,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const navLinks = [
   { to: "about", href: "/#about", label: "About", offset: -88 },
   { to: "skills", href: "/#skills", label: "Skills", offset: -88 },
-  { to: "works", href: "/works", label: "Works", offset: -72, isPage: true },
+  { to: "works", href: "/#works", label: "Works", offset: -72 },
   { to: "contact", href: "/#contact", label: "Contact", offset: -48 },
 ];
 
@@ -92,22 +92,9 @@ export const Navigation = () => {
   const isSolid = isScrolled || isMenuOpen || !isHome;
 
   const renderLink = (link, mobile = false) => {
-    const isWorksActive = link.isPage && pathname === "/works";
     const className = mobile
       ? "site-nav__link site-nav__link--mobile"
-      : `site-nav__link ${isWorksActive ? "is-active" : ""}`;
-
-    if (link.isPage) {
-      return (
-        <Link
-          href={link.href}
-          className={className}
-          onClick={() => setIsMenuOpen(false)}
-        >
-          {link.label}
-        </Link>
-      );
-    }
+      : "site-nav__link";
 
     if (isHome) {
       return (
@@ -142,6 +129,7 @@ export const Navigation = () => {
       className={[
         "site-nav",
         isSolid ? "is-solid" : "",
+        isMenuOpen ? "is-menu-open" : "",
         isHidden && !isMenuOpen ? "is-hidden" : "",
       ]
         .filter(Boolean)
@@ -169,8 +157,8 @@ export const Navigation = () => {
           <ThemeToggle />
         </div>
 
-        <div className="flex items-center gap-1.5 lg:hidden">
-          <ThemeToggle />
+        <div className="site-nav__actions lg:hidden">
+          {!isMenuOpen && <ThemeToggle />}
           <button
             type="button"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -188,18 +176,26 @@ export const Navigation = () => {
 
       {isMenuOpen && (
         <nav className="site-nav__mobile" aria-label="Mobile">
-          <ul className="flex flex-col gap-1">
-            {navLinks.map((link, index) => (
-              <li key={link.to} className="border-b border-ink/10">
-                <div className="flex items-baseline gap-4 py-4">
-                  <span className="font-body text-xs tabular-nums text-muted">
+          <div className="site-nav__mobile-body">
+            <p className="site-nav__mobile-label">Menu</p>
+            <ul className="site-nav__mobile-list">
+              {navLinks.map((link, index) => (
+                <li key={link.to} className="site-nav__mobile-item">
+                  <span className="site-nav__mobile-index" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   {renderLink(link, true)}
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="site-nav__mobile-footer">
+            <ThemeToggle />
+            <p className="site-nav__mobile-theme-label">
+              Appearance
+            </p>
+          </div>
         </nav>
       )}
     </header>
